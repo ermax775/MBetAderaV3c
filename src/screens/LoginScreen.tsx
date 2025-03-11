@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { supabase } from '../services/supabaseClient';
+import { useTranslation } from 'react-i18next';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { t } = useTranslation();
+
   const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -16,16 +19,42 @@ const LoginScreen = ({ navigation }) => {
       console.error('Login error:', error.message);
     } else {
       console.log('Login successful');
-      navigation.navigate('MainTabs');
+      const userRole = data.user?.role || 'customer'; // Assume 'customer' as default role
+      switch (userRole) {
+        case 'customer':
+          navigation.navigate('CustomerHome');
+          break;
+        case 'delivery':
+          navigation.navigate('DeliveryHome');
+          break;
+        case 'admin':
+          navigation.navigate('AdminHome');
+          break;
+        default:
+          navigation.navigate('CustomerHome');
+      }
+    }
+  };
+
+  const handlePasswordReset = async () => {
+    if (!email) {
+      Alert.alert('Error', 'Please enter your email address.');
+      return;
+    }
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    if (error) {
+      Alert.alert('Error', error.message);
+    } else {
+      Alert.alert('Success', 'Password reset email sent.');
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>{t('login')}</Text>
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder={t('email')}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -33,13 +62,14 @@ const LoginScreen = ({ navigation }) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder={t('password')}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Login" onPress={handleLogin} />
-      <Button title="Back to Welcome" onPress={() => navigation.goBack()} />
+      <Button title={t('login')} onPress={handleLogin} />
+      <Button title={t('forgotPassword')} onPress={handlePasswordReset} />
+      <Button title={t('backToWelcome')} onPress={() => navigation.goBack()} />
     </View>
   );
 };
