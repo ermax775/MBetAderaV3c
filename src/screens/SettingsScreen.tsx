@@ -1,12 +1,19 @@
 import React from 'react';
-import { View, Text, Switch, StyleSheet } from 'react-native';
+import { View, Text, Switch, StyleSheet, Image } from 'react-native';
+import LanguageSelector from '../components/LanguageSelector';
 
 const SettingsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.settingItem}>
+        <Image source={require('../../assets/notification1.png')} style={styles.icon} />
         <Text style={styles.settingText}>Notifications</Text>
         <Switch value={true} onValueChange={() => {}} />
+      </View>
+      <View style={styles.settingItem}>
+        <Image source={require('../../assets/themes1.png')} style={styles.icon} />
+        <Text style={styles.settingText}>Theme</Text>
+        <Switch value={false} onValueChange={() => {}} />
       </View>
       <View style={styles.settingItem}>
         <Text style={styles.settingText}>Language</Text>
@@ -16,6 +23,7 @@ const SettingsScreen = () => {
         <Text style={styles.settingText}>Account Management</Text>
         <Text style={styles.settingValue}>Manage</Text>
       </View>
+      <LanguageSelector />
     </View>
   );
 };
@@ -40,6 +48,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'gray',
   },
+  icon: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  }
 });
 
 export default SettingsScreen; 

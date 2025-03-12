@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native';
 import { supabase } from '../services/supabaseClient';
 import { useTranslation } from 'react-i18next';
 
@@ -38,6 +38,8 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image source={require('../../assets/logo2.png')} style={styles.logo} />
+      <Text style={styles.tagline}>MBet-Adera: Secure and Reliable Parcel Tracking</Text>
       <Text style={styles.title}>{t('login')}</Text>
       <TextInput
         style={styles.input}
@@ -71,6 +73,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  tagline: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  logo: {
+    width: 100,
+    height: 100,
     marginBottom: 16,
   },
   input: {

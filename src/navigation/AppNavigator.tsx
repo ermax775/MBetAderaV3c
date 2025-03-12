@@ -11,9 +11,6 @@ import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import ParcelTrackingScreen from '../screens/ParcelTrackingScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
-import CustomerHome from '../screens/CustomerHome';
-import DeliveryHome from '../screens/DeliveryHome';
-import AdminHome from '../screens/AdminHome';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,9 +60,6 @@ const AppNavigator = () => {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegistrationScreen} />
         <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-        <Stack.Screen name="CustomerHome" component={CustomerHome} options={{ headerShown: false }} />
-        <Stack.Screen name="DeliveryHome" component={DeliveryHome} options={{ headerShown: false }} />
-        <Stack.Screen name="AdminHome" component={AdminHome} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

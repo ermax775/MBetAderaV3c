@@ -1,10 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import LanguageSelector from '../components/LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 const HomeScreen = () => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to the Home Screen</Text>
+      <LanguageSelector />
+      <Text style={styles.title}>{t('homeTitle')}</Text>
     </View>
   );
 };

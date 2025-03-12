@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import LanguageSelector from '../components/LanguageSelector';
 
 const NotificationsScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Notifications</Text>
       <Text style={styles.info}>You have no new notifications.</Text>
+      <LanguageSelector />
     </View>
   );
 };
