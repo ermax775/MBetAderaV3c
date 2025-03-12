@@ -19,20 +19,7 @@ const LoginScreen = ({ navigation }) => {
       console.error('Login error:', error.message);
     } else {
       console.log('Login successful');
-      const userRole = data.user?.role || 'customer'; // Assume 'customer' as default role
-      switch (userRole) {
-        case 'customer':
-          navigation.navigate('CustomerHome');
-          break;
-        case 'delivery':
-          navigation.navigate('DeliveryHome');
-          break;
-        case 'admin':
-          navigation.navigate('AdminHome');
-          break;
-        default:
-          navigation.navigate('CustomerHome');
-      }
+      navigation.navigate('MainTabs');
     }
   };
 
