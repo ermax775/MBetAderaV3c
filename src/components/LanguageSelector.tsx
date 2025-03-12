@@ -1,29 +1,49 @@
-import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import React, { useState } from 'react';
+import { View, StyleSheet, Image, Text, TouchableOpacity, Modal, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const languageItems = [
+    { label: 'English', value: 'en', flag: require('../../assets/flags/en.png') },
+    { label: 'Amharic', value: 'am', flag: require('../../assets/flags/am.png') },
+    { label: 'Arabic', value: 'ar', flag: require('../../assets/flags/ar.png') },
+    { label: 'German', value: 'de', flag: require('../../assets/flags/de.png') },
+    { label: 'Chinese', value: 'zh', flag: require('../../assets/flags/zh.png') },
+  ];
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    setModalVisible(false);
   };
 
   return (
     <View style={styles.container}>
-      <RNPickerSelect
-        onValueChange={(value) => changeLanguage(value)}
-        items={[
-          { label: 'English', value: 'en' },
-          { label: 'Amharic', value: 'am' },
-          { label: 'Arabic', value: 'ar' },
-          { label: 'German', value: 'de' },
-          { label: 'Chinese', value: 'zh' },
-        ]}
-        style={pickerSelectStyles}
-        placeholder={{}}
-      />
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <Icon name="globe" size={24} color="black" style={styles.icon} />
+      </TouchableOpacity>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <FlatList
+            data={languageItems}
+            keyExtractor={(item) => item.value}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.itemContainer} onPress={() => changeLanguage(item.value)}>
+                <Image source={item.flag} style={styles.flag} />
+                <Text style={styles.label}>{item.label}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -33,33 +53,30 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    marginRight: 8,
   },
   flag: {
     width: 20,
     height: 20,
+    marginRight: 8,
   },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
   },
-  inputAndroid: {
+  label: {
     fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 0.5,
-    borderColor: 'purple',
-    borderRadius: 8,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 

@@ -1,12 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import LanguageSelector from '../components/LanguageSelector';
+import { useTranslation } from 'react-i18next';
+import { useTheme } from '../context/ThemeContext';
 
 const NotificationsScreen = () => {
+  const { t } = useTranslation();
+  const { isDarkTheme } = useTheme();
+  
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Notifications</Text>
-      <Text style={styles.info}>You have no new notifications.</Text>
+    <View style={[styles.container, { backgroundColor: isDarkTheme ? '#333' : '#fff' }]}>
+      <Text style={[styles.title, { color: isDarkTheme ? '#fff' : '#000' }]}>{t('notifications')}</Text>
+      <Text style={[styles.info, { color: isDarkTheme ? '#fff' : '#000' }]}>{t("You have no new notifications.")}</Text>
       <LanguageSelector />
     </View>
   );

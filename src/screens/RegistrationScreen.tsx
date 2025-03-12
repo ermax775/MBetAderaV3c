@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { supabase } from '../services/supabaseClient';
+import { useTranslation } from 'react-i18next';
+import { useTheme } from '@/context/ThemeContext';
 
 const RegistrationScreen = ({ navigation }) => {
+  const { t } = useTranslation();
+  const { isDarkTheme, toggleTheme } = useTheme();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -13,16 +18,16 @@ const RegistrationScreen = ({ navigation }) => {
     });
 
     if (error) {
-      console.error('Registration error:', error.message);
+      console.error(t('Registration error:'), error.message);
     } else {
-      console.log('Registration successful');
+      console.log(t('Registration successful'));
       // Optionally, navigate to a welcome or login screen
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Register</Text>
+      <Text style={styles.title}> {t('Register')}</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -38,8 +43,8 @@ const RegistrationScreen = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Register" onPress={handleRegister} />
-      <Button title="Back to Welcome" onPress={() => navigation.goBack()} />
+      <Button title={t('Register')} onPress={handleRegister} />
+      <Button title={t('Back to Welcome')} onPress={() => navigation.goBack()} />
     </View>
   );
 };

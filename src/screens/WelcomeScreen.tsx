@@ -5,6 +5,7 @@ import { Video } from 'expo-av';
 import { supabase } from '../services/supabaseClient';
 import LanguageSelector from '../components/LanguageSelector';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '@/context/ThemeContext';
 
 // Define the type for the navigation prop
 interface WelcomeScreenProps extends NativeStackScreenProps<any, any> {}
@@ -12,6 +13,7 @@ interface WelcomeScreenProps extends NativeStackScreenProps<any, any> {}
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
   const [parcels, setParcels] = useState([]);
   const { t } = useTranslation();
+  const { isDarkTheme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const fetchParcels = async () => {
@@ -40,12 +42,12 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
         isLooping
         style={styles.video}
       />
-      <Text style={styles.title}>{t('welcomeTitle')}</Text>
-      <Text style={styles.description}>{t('welcomeDescription')}</Text>
-      <Text style={styles.features}>Features:
-        - Real-time tracking
-        - Multilingual support
-        - Secure authentication
+      <Text style={styles.title}>{t('MBet-Adera')}</Text>
+      <Text style={styles.description}> {t('We Deliver Your Parcel; We Deliver Your Satisfaction, Trust and Reliability')}</Text>
+      <Text style={styles.features}>{t('features')}:
+        - {t('Real-time tracking')}
+        - {t('Multilingual support')}
+        - {t('Secure authentication')}
       </Text>
       <FlatList
         data={parcels}

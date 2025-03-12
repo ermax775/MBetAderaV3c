@@ -2,14 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import LanguageSelector from '../components/LanguageSelector';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../context/ThemeContext';
 
 const HomeScreen = () => {
   const { t } = useTranslation();
+  const { isDarkTheme } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDarkTheme ? '#333' : '#fff' }]}>
       <LanguageSelector />
-      <Text style={styles.title}>{t('homeTitle')}</Text>
+      <Text style={[styles.title, { color: isDarkTheme ? '#fff' : '#000' }]}>
+        {t('MBetAdera Home')}
+      </Text>
     </View>
   );
 };
